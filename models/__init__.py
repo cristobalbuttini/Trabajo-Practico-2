@@ -1,1 +1,1 @@
-from alumno import Alumno
+from .alumno import Alumno

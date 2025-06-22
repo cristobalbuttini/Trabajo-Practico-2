@@ -1,7 +1,7 @@
 import csv
 from models.alumno import Alumno
 
-class AlumnoImportService:
+class AlumnoService:
     def __init__(self, repository):
         self.repository = repository
 

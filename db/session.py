@@ -8,6 +8,8 @@ engine = create_engine(DATABASE_URL, echo=True)                     #crea el mot
 SessionLocal = sessionmaker(bind=engine)                            #prepara un creador de sessiones para que se pueda usar la BD
 Db = declarative_base()                                             #crea una clase base declarativa para los modelos de SQLAlchemy
  
+def get_session():
+    return SessionLocal()
 
 
 
