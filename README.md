@@ -1,4 +1,11 @@
 # SySacad 2.0 - Desarrollo de Software
+## Integrantes
+- López Laszuk Juan Pablo
+- Piastrellini Mariano
+- Buttini Cristobal
+- Sosa Ricardo
+- Iriarte López Ana Valentina
+- Moya Carlos
 
 SYSACAD 2.0 es un sistema académico desarrollado en Python, diseñado bajo una arquitectura en capas y con un enfoque de desarrollo guiado por pruebas (TDD).
 
