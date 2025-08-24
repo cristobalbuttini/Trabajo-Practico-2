@@ -16,26 +16,12 @@ SYSACAD 2.0/
 ├── services/           # Lógica de negocio 
 ├── test/               # Pruebas unitarias (verifican solo la conexion con service)
 ├── mapping/            # Serialización, deserialización y validación de datos
-├── resources/          # Recursos REST que exponen la API (endpoints HTTP)
+├── resources/          # Recursos REST que exponen la API (Solicitudes HTTP)
 ├── db/                 # Configuración de sesión SQLAlchemy
 ├── config/             # Lectura de variables de entorno (.env)
 ├── .env                # Variables de Entorno. Contiene la URI de conexión a PostgreSQL
 ├── requirements.txt    # Dependencias necesarias
 └── README.md           # Documentacion principal 
-```
-
-├── resources/ # Recursos REST que exponen la API (endpoints HTTP)
-├── test/ # Pruebas unitarias e integrales bajo TDD
-├── migrations/ # Versionado y control de cambios en el esquema de base de datos
-├── xml_data/ # Archivos XML fuente provistos para persistencia inicial
-├── db/ # Configuración de la sesión SQLAlchemy
-├── config/ # Lectura de variables de entorno (.env)
-├── scripts/ # Scripts auxiliares para importar y cargar datos
-├── .env # Contiene la URI de conexión a PostgreSQL
-├── requirements.txt # Dependencias necesarias del proyecto
-└── README.md # Documentación principal
-
----
 
 ## 🔧 Modulos del proyecto
 
