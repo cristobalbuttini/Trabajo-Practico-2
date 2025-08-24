@@ -58,7 +58,78 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
 ---
 
 
-## **Requerimientos y pasos para la ejecución**
+## **Pasos para la ejecución de la aplicacion **
+
+1. **Crear el entorno virtual en la raiz del proyecto**  
+   ➜ `python -m venv venv`
+
+2. **Activar el entorno virtual (necesario para instalar las librerias de requirements.txt )**  
+   ➜ `.\venv\Scripts\Activate.ps1`
+
+3. **Instalar las librerías que estan en requirements.txt**  
+   ➜ `pip install -r requirements.txt`
+
+**El paso 3 se puede evitar utilizando script.ps1**
+<img width="159" height="23" alt="image" src="https://github.com/user-attachments/assets/a6c21d32-aac3-4870-bf43-b2227d955035" />
+
+* a- Acceder al script.ps1
+* b- Modificar la ruta del entorno virtual si es necesario
+
+
+5. **Crear un archivo `.env` en la raíz del directorio**  
+   ➜ Archivo: `.env`
+
+6. **Usar como modelo el archivo `env-example` y completar en `.env` los datos de conexión a la base de datos**  
+   *(usuario, contraseña, nombre de la DB)*
+
+7. **Ejecutar los scripts de carga desde la carpeta `scripts/`**  
+   Cada script persiste los datos de un XML distinto.  
+   ➜ Para que se creen todas las tablas y se carguen todos los datos, ejecutá cada uno:
+
+   ```bash
+   python scripts/facultad_persistencia.py
+   python scripts/especialidad_persistencia.py
+   python scripts/grado_persistencia.py
+   python scripts/materia_persistencia.py
+   ...
+8. **Se pueden ver las tablas con su contenido usando la terminal de Docker**  
+   ➜ Usando la terminal dentro del servidor de DOCKER:
+
+   ```bash
+   # Conectarse al usuario
+   psql -U sysacad_cristobal -d postgres
+
+   # Listar bases de datos disponibles
+   \l
+
+   # Conectarse a la base de datos de trabajo
+   \c DEV_SYSACAD
+
+   # Listar todas las tablas dentro de la base actual
+   \dt
+
+   # Mostrar el contenido de una tabla específica
+   SELECT * FROM nombre_tabla; 
+---
+
+## 📅 Mejoras 
+
+>En vez de tener un script de persistencia por archivo o modelo, seria mejor usar un solo script que persista los datos de TODOS los archivos XML. Esto para seguir el principio DRY consiste en que no repitamos bloques de codigo que hacen lo mismo en diferentes partes del proyecto
+
+> Mejorar la importacion de algunos modulos como service y repos
+---
+
+## 📚 Tecnologías utilizadas
+
+* **Python 3.13**
+* **SQLAlchemy** (ORM)
+* **PostgreSQL** como base de datos
+* **Archivos XML** con codificación `Windows-1252`
+* **Estructura de proyecto en capas** (sin Flask no es cliente-servidor)
+* **Docker** (para base de datos local DEV_SYSACAD)
+---
+
+## **Pasos para la ejecución**
 
 1. **Crear el entorno virtual**  
    ➜ `python -m venv venv`
@@ -105,22 +176,6 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
    SELECT * FROM nombre_tabla; 
 ---
 
-## 📅 Mejoras 
-
->En vez de tener un script de persistencia por archivo o modelo, seria mejor usar un solo script que persista los datos de TODOS los archivos XML. Esto para seguir el principio DRY consiste en que no repitamos bloques de codigo que hacen lo mismo en diferentes partes del proyecto
-
-> Mejorar la importacion de algunos modulos como service y repos
----
-
-## 📚 Tecnologías utilizadas
-
-* **Python 3.13**
-* **SQLAlchemy** (ORM)
-* **PostgreSQL** como base de datos
-* **Archivos XML** con codificación `Windows-1252`
-* **Estructura de proyecto en capas** (sin Flask no es cliente-servidor)
-* **Docker** (para base de datos local DEV_SYSACAD)
----
 
 
 ## ♻ Autor
