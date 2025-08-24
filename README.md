@@ -1,28 +1,39 @@
 # SySacad 2.0 - Desarrollo de Software
 
-SYSACAD 2.0 es un sistema académico desarrollado en Python, diseñado bajo una arquitectura en capas y con enfoque de desarrollo guiado por preubas (TDD).
+SYSACAD 2.0 es un sistema académico desarrollado en Python, diseñado bajo una arquitectura en capas y con un enfoque de desarrollo guiado por pruebas (TDD).
 
 > ⚡ La arquitectura de SYSACAD 2.0 está estructurada en múltiples capas y módulos especializados, que garantizan la separación de responsabilidades:
 models - repositories - services - mapping - resources - tests
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Descripcion Modulos Principales del proyecto 
 
 ```
-TP-1/
-├── models/             # Definiciones de tablas como objetos gracias a SQLALCHEMY (ORM)
-├── repositories/       # Acceso y persistencia en BD (SQLAlchemy puro)
-├── services/           # Lógica de negocio (que debe hacer?) (carga desde los XML)
+SYSACAD 2.0/
+├── models/             # Definiciones de tablas como objetos usando a SQLALCHEMY (ORM)
+├── repositories/       # Acceso y persistencia en BD (SQLAlchemy)
+├── services/           # Lógica de negocio 
 ├── test/               # Pruebas unitarias (verifican solo la conexion con service)
-├── xml_data/           # Archivos XML provistos por el profesor
+├── mapping/            # Serialización, deserialización y validación de datos
+├── resources/          # Recursos REST que exponen la API (endpoints HTTP)
 ├── db/                 # Configuración de sesión SQLAlchemy
 ├── config/             # Lectura de variables de entorno (.env)
-├── scripts/            # Scripts de importación (invocan services)
-├── .env                # Contiene la URI de conexión a PostgreSQL
-├── requirements.txt    # Dependencias necesarias para que funcione
-└── README.md           # Este archivo
+├── .env                # Variables de Entorno. Contiene la URI de conexión a PostgreSQL
+├── requirements.txt    # Dependencias necesarias
+└── README.md           # Documentacion principal 
 ```
+
+├── resources/ # Recursos REST que exponen la API (endpoints HTTP)
+├── test/ # Pruebas unitarias e integrales bajo TDD
+├── migrations/ # Versionado y control de cambios en el esquema de base de datos
+├── xml_data/ # Archivos XML fuente provistos para persistencia inicial
+├── db/ # Configuración de la sesión SQLAlchemy
+├── config/ # Lectura de variables de entorno (.env)
+├── scripts/ # Scripts auxiliares para importar y cargar datos
+├── .env # Contiene la URI de conexión a PostgreSQL
+├── requirements.txt # Dependencias necesarias del proyecto
+└── README.md # Documentación principal
 
 ---
 
