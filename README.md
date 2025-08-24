@@ -22,6 +22,7 @@ SYSACAD 2.0/
 ├── .env                # Variables de Entorno. Contiene la URI de conexión a PostgreSQL
 ├── requirements.txt    # Dependencias necesarias
 └── README.md           # Documentacion principal 
+```
 
 ## 🔧 Modulos del proyecto
 
