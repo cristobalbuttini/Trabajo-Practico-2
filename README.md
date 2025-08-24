@@ -75,9 +75,12 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
 
 * a- Acceder al script.ps1
 * b- Modificar la ruta del entorno virtual si es necesario
-* <img width="506" height="22" alt="image" src="https://github.com/user-attachments/assets/2546c7a6-5797-4a7d-b3ba-f9de6a69a2b4" />
-* c- Si es necesario modificar la Política de Ejecución a RemoteSigned → permite ejecutar scripts locales sin firmar
-* c- Ejecutar el script install.ps1 en la terminal 
+  <img width="506" height="22" alt="image" src="https://github.com/user-attachments/assets/2546c7a6-5797-4a7d-b3ba-f9de6a69a2b4" />
+* c- Modificar la Política de Ejecución a RemoteSigned → permite ejecutar scripts locales sin firmar
+* c- Ejecutar el script install.ps1 en la terminal
+  ```terminal
+   .\install.ps1 
+   ...
 
 
 
