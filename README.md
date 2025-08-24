@@ -69,11 +69,17 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
 3. **Instalar las librerías que estan en requirements.txt**  
    ➜ `pip install -r requirements.txt`
 
-**El paso 3 se puede evitar utilizando script.ps1**
+**El paso 3 se puede evitar utilizando el script install.ps1**
+
 <img width="159" height="23" alt="image" src="https://github.com/user-attachments/assets/a6c21d32-aac3-4870-bf43-b2227d955035" />
 
 * a- Acceder al script.ps1
 * b- Modificar la ruta del entorno virtual si es necesario
+* <img width="506" height="22" alt="image" src="https://github.com/user-attachments/assets/2546c7a6-5797-4a7d-b3ba-f9de6a69a2b4" />
+* c- Si es necesario modificar la Política de Ejecución a RemoteSigned → permite ejecutar scripts locales sin firmar
+* c- Ejecutar el script install.ps1 en la terminal 
+
+
 
 
 5. **Crear un archivo `.env` en la raíz del directorio**  
