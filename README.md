@@ -75,7 +75,6 @@ En una nueva terminal ejecutar los siguiente comandos:
   Una vez instaladas correctamente todas las librerias y dependencias especificadas en el archivo requirements.txt se puede proceder con la ejecucion de la aplicacion
   
 4. **Ejecucion de la Aplicacion**
-   
    ➜ `python app.py `
 
 
