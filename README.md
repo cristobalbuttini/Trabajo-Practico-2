@@ -1,4 +1,4 @@
-# SySacad 2.0 - Desarrollo de Software
+# SYSACAD 2.0 - Desarrollo de Software
 ## Integrantes
 - López Laszuk Juan Pablo
 - Piastrellini Mariano
@@ -11,6 +11,27 @@ SYSACAD 2.0 es un sistema académico desarrollado en Python, diseñado bajo una 
 
 > ⚡ La arquitectura de SYSACAD 2.0 está estructurada en múltiples capas y módulos especializados, que garantizan la separación de responsabilidades:
 models - repositories - services - mapping - resources - tests
+
+---
+## Requerimientos
+- Docker Dekstop
+- PlantUML
+- POSTMAN
+- PostgreSQL 14.17-bookworm
+- Python 3.15.5
+- Flask==3.1.0
+- Flask-SQLAlchemy==3.1.1
+- SQLAlchemy==2.0.40
+- psycopg2==2.9.10
+- psycopg[binary]
+- python-dotenv==1.1.0
+- Flask-Migrate==4.1.0
+- flask-marshmallow==1.3.0
+- marshmallow==4.0.0
+- weasyprint==65.1
+- python-odt-template==0.5.1
+- docxtpl==0.20.0
+- markupsafe== 3.0.2
 
 ---
 
@@ -26,37 +47,143 @@ SYSACAD 2.0/
 ├── resources/          # Recursos REST que exponen la API (Solicitudes HTTP)
 ├── db/                 # Configuración de sesión SQLAlchemy
 ├── config/             # Lectura de variables de entorno (.env)
-├── .env                # Variables de Entorno. Contiene la URI de conexión a PostgreSQL
+├── .env                # Variables de entorno. Contiene la URI de conexión a PostgreSQL
 ├── requirements.txt    # Dependencias necesarias
 └── README.md           # Documentacion principal 
 ```
 
-## 🔧 Modulos del proyecto
+## Guia para la ejecucion de los TEST
+Para testear las clases es necesario contar con una base de datos en la cual se pueda realizar los testeos.
+Se va a usar PostgreSQL para la base de datos y vamos a crear un contenedor en Docker Desktop.
 
-### 1. **models/**
+---
+## Paso 1
+En el repositorio crear un archivo `.env` en el cual van a poner esto:
+```env
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_RECORD_QUERIES = True
+TEST_DATABASE_URI='postgresql+psycopg2://usuario:contraseña@localhost:5433/TEST_SYSACAD'
+DEV_DATABASE_URI='postgresql+psycopg2://usuario:contraseña@localhost:5433/DEV_SYSACAD'
+PROD_DATABASE_URI='postgresql://usuario:contraseña@localhost:5433/SYSACAD'
+```
+Van a cambiar usuario, contraseña y puerto según los valores que correspondan.
+### Explicación del codigo de arriba:
+Ese fragmento de código está relacionado con la configuración de una aplicación en Flask que utiliza SQLAlchemy como ORM (Object Relational Mapper).
+🔧 Parámetros de configuración
+- SQLALCHEMY_TRACK_MODIFICATIONS = False
+Desactiva el sistema de seguimiento de modificaciones de objetos.
 
-En esta carpeta se definen las **tablas como clases de Python**, utilizando la biblioteca **SQLAlchemy** como ORM (Object Relational Mapper). Cada clase representa una entidad académica (por ejemplo, `Facultad`, `Materia`, `Localidad`) y se mapea a una tabla real de PostgreSQL
-* Utiliza `SQLAlchemy` sin usar de `Flask` (mas simple)
+Esto mejora el rendimiento y evita una advertencia (warning) innecesaria.
 
-### 3. **services/**
+✅ Recomendado dejar en False si no vas a usar señales del modelo.
 
-* Contiene la **lógica de negocio (que debe hacer)**.
-* Lee archivos XML (`ElementTree`) con codificación especial `Windows-1252`.
-* Valida, transforma e instancia los modelos para ser guardados por la capa repository.
+- SQLALCHEMY_RECORD_QUERIES = True
+Activa el registro de las consultas SQL ejecutadas.
 
-### 4. **test/**
+Útil para depuración, análisis de rendimiento y profiling.
 
-* Solo se  ** verifica la conexión entre `test → service`**.
-* No se valida persistencia ni consultas en la base (No tiene CRUD)
+Normalmente se usa en entornos de desarrollo o testing.
+ URIs de conexión a bases de datos
+Cada URI define cómo conectarse a una base de datos PostgreSQL distinta, y están pensadas para distintos entornos:
 
-### 5. ** scripts**
+- TEST_DATABASE_URI
+Conecta a la base de datos de pruebas llamada TEST_SYSACAD en:
+```makefile
+host: localhost
+puerto: 5433
+usuario: usuario
+contraseña: contraseña
+```
+- DEV_DATABASE_URI
+Conecta a la base de datos de desarrollo DEV_SYSACAD en el mismo host y puerto.
 
-Cada entidad tiene un script dedicado dentro de `scripts/`, que:
+- PROD_DATABASE_URI
+Conecta a la base de datos de producción SYSACAD.
+Usa el mismo host y puerto, aunque no tiene especificado +psycopg2, lo que puede implicar que use el controlador por defecto de SQLAlchemy para PostgreSQL (aunque no es obligatorio si psycopg2 es el único instalado).
 
-* Crea las tablas necesarias (si es que no existen, si ya existen solo actualiza el contenido con el metodo cargar de servivce).
-* Llama al método `cargar_xml()` para cargar y persistir datos.
+**En resumen**
+Esto configura los parámetros de SQLAlchemy y define cómo conectarse a tres bases de datos diferentes para:
+- Testing
+- Desarrollo
+- Producción
+---
+## Paso 2
+En una carpeta aparte del repositorio crear una carpeta llamada docker y clonar este repositorio: 
+https://github.com/umpprats/microservicios.git, van a borrar todas las carpetas menos la de PostgreSQL
+
+![image](https://github.com/user-attachments/assets/14144578-f6d4-4eee-9b11-51a3f873146e)
+
+Al archivo ``.env`` lo van a renombrar borrando el "**-example**" y van a abrirlo y cambiar los valores del archivo por su usuario, contraseña y nombre de la base de datos
+```env
+POSTGRES_PASSWORD=CONTRASEÑA
+POSTGRES_DB=NOMBRE DE LA BASE DE DATOS
+POSTGRES_USER=USUARIO
+```
+Ahora para configurar el archivo `docker-compose.yml` lo abren con visual studio 
+```YAML
+services:    
+  postgresql:
+    container_name: postgresql-servidor  # Nombre del contenedor en Docker
+    image: postgres:15.4-bullseye        # Imagen de PostgreSQL que se descarga
+    ports:
+      - "5432:5432"                      # Mapea el puerto 5432 del host al contenedor
+    networks:
+      - mired                            # Nombre de la red Docker (debe coincidir con la red externa)
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}  # Variables de entorno (no modificar, se toman del entorno)
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data:/var/lib/postgresql/data           # Persistencia de datos
+      - ./sql:/docker-entrypoint-initdb.d         # Scripts SQL de inicialización
+    restart: always                                # Reiniciar automáticamente si se cae
+
+networks:
+  mired:           # Reemplazar 'mired' por el nombre real de tu red Docker
+    external: true # Indica que la red ya existe y es externa
+```
+
+---
+## Paso 3
+Ahora en docker abren la terminal y se mueven dentro de la carpeta PostgreSQL que clonamos en el paso anterior y dentro la carpeta usan los comandos:
+```bash
+# Ir a la carpeta del repositorio
+cd "ruta/del/repositorio"
+
+# Crear la red Docker (el nombre debe coincidir con el usado en docker-compose.yml)
+docker network create nombre_de_la_red
+
+# Levantar los contenedores definidos en docker-compose.yml
+docker compose up
+```
+Esto empezara a crear la base de datos y tomara unos segundos, cuando termine apareceran 3 opciones en las que van a presionar la letra **v** los llevara a docker y ahi en containers pueden ver el container creado.
+
+
 ---
 
+## Paso 4
+Ahora hay que abrir el repositorio en el IDE con el que se trabaja, en nuestro caso Visual Studio Code, es necesario tener instalada la extension `Database Client JDBC` para poder conectarse a la base de datos.
+
+Una vez el cliente fue instalado, lo abren desde la barra de tareas y dan click en crear una nueva base de datos.
+
+![image](https://github.com/user-attachments/assets/595d150a-8a53-407a-ad2c-b873d1811625)
+
+Ahi van a colocar la configuración de la base de datos (Es importante que el contenedor este encendido desde el DOCKER, si no, no funcionara)
+
+![image](https://github.com/user-attachments/assets/3c383a25-6b0d-4923-a7cd-64fdcfa32944)
+
+ahora se habrá creado esta lista, tocan el `+` colocan estas líneas y las ejecutan para crear las 2 bases de datos que configuraron al principio:
+```SQL
+CREATE DATABASE "TEST_SYSACAD"
+CREATE DATABASE "DEV_SYSACAD"
+```
+
+Ahora la base de datos esta lista para realizar los testeos de las clases!
+
+![image](https://github.com/user-attachments/assets/182c766c-366b-4777-b88f-0746058085ec)
+
+---
 
 ## Pasos para la ejecución de la aplicacion
 Para garantizar una correcta inicialización del proyecto, se recomienda seguir el siguiente procedimiento.
@@ -76,122 +203,4 @@ En una nueva terminal ejecutar los siguiente comandos:
   
 4. **Ejecucion de la Aplicacion**
    ➜ `python app.py `
-
-
-## 🚀 Pasos para la ejecución de la aplicación
-
-Para garantizar una correcta inicialización del proyecto, se recomienda seguir el siguiente procedimiento:
-
-1. **Crear el entorno virtual en la raíz del proyecto**  
-   ```bash
-   python -m venv venv
-
-
-
-5. **Crear un archivo `.env` en la raíz del directorio**  
-   ➜ Archivo: `.env`
-
-6. **Usar como modelo el archivo `env-example` y completar en `.env` los datos de conexión a la base de datos**  
-   *(usuario, contraseña, nombre de la DB)*
-
-7. **Ejecutar los scripts de carga desde la carpeta `scripts/`**  
-   Cada script persiste los datos de un XML distinto.  
-   ➜ Para que se creen todas las tablas y se carguen todos los datos, ejecutá cada uno:
-
-   ```bash
-   python scripts/facultad_persistencia.py
-   python scripts/especialidad_persistencia.py
-   python scripts/grado_persistencia.py
-   python scripts/materia_persistencia.py
-   ...
-8. **Se pueden ver las tablas con su contenido usando la terminal de Docker**  
-   ➜ Usando la terminal dentro del servidor de DOCKER:
-
-   ```bash
-   # Conectarse al usuario
-   psql -U sysacad_cristobal -d postgres
-
-   # Listar bases de datos disponibles
-   \l
-
-   # Conectarse a la base de datos de trabajo
-   \c DEV_SYSACAD
-
-   # Listar todas las tablas dentro de la base actual
-   \dt
-
-   # Mostrar el contenido de una tabla específica
-   SELECT * FROM nombre_tabla; 
----
-
-## 📅 Mejoras 
-
->En vez de tener un script de persistencia por archivo o modelo, seria mejor usar un solo script que persista los datos de TODOS los archivos XML. Esto para seguir el principio DRY consiste en que no repitamos bloques de codigo que hacen lo mismo en diferentes partes del proyecto
-
-> Mejorar la importacion de algunos modulos como service y repos
----
-
-## 📚 Tecnologías utilizadas
-
-* **Python 3.13**
-* **SQLAlchemy** (ORM)
-* **PostgreSQL** como base de datos
-* **Archivos XML** con codificación `Windows-1252`
-* **Estructura de proyecto en capas** (sin Flask no es cliente-servidor)
-* **Docker** (para base de datos local DEV_SYSACAD)
----
-
-## **Pasos para la ejecución**
-
-1. **Crear el entorno virtual**  
-   ➜ `python -m venv venv`
-
-2. **Activar el entorno virtual (necesario para instalar las dependencias y librerias necesarias para que se ejecute)**  
-   ➜ `.\venv\Scripts\Activate.ps1`
-
-3. **Instalar las librerías que estan en requirements.txt**  
-   ➜ `pip install -r requirements.txt`
-
-4. **Crear un archivo `.env` en la raíz del directorio**  
-   ➜ Archivo: `.env`
-
-5. **Usar como modelo el archivo `env-example` y completar en `.env` los datos de conexión a la base de datos**  
-   *(usuario, contraseña, nombre de la DB)*
-
-6. **Ejecutar los scripts de carga desde la carpeta `scripts/`**  
-   Cada script persiste los datos de un XML distinto.  
-   ➜ Para que se creen todas las tablas y se carguen todos los datos, ejecutá cada uno:
-
-   ```bash
-   python scripts/facultad_persistencia.py
-   python scripts/especialidad_persistencia.py
-   python scripts/grado_persistencia.py
-   python scripts/materia_persistencia.py
-   ...
-7. **Se pueden ver las tablas con su contenido usando la terminal de Docker**  
-   ➜ Usando la terminal dentro del servidor de DOCKER:
-
-   ```bash
-   # Conectarse al usuario
-   psql -U sysacad_cristobal -d postgres
-
-   # Listar bases de datos disponibles
-   \l
-
-   # Conectarse a la base de datos de trabajo
-   \c DEV_SYSACAD
-
-   # Listar todas las tablas dentro de la base actual
-   \dt
-
-   # Mostrar el contenido de una tabla específica
-   SELECT * FROM nombre_tabla; 
----
-
-
-
-## ♻ Autor
-
-Cristobal Buttini  Legajo n° 9976
-Sosa Ricardp       Legajo n° 10255
 
