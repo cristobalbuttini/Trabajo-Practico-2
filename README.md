@@ -59,6 +59,7 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
 
 
 ## **Pasos para la ejecución de la aplicacion **
+En una nueva terminal ejecutar los siguiente comandos:
 
 1. **Crear el entorno virtual en la raiz del proyecto**  
    ➜ `python -m venv venv`
@@ -66,22 +67,20 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
 2. **Activar el entorno virtual (necesario para instalar las librerias de requirements.txt )**  
    ➜ `.\venv\Scripts\Activate.ps1`
 
-3. **Instalar las librerías que estan en requirements.txt**  
+3. **Instalar las librerías y dependencias que estan en requirements.txt**  
    ➜ `pip install -r requirements.txt`
 
-**El paso 3 se puede evitar utilizando el script install.ps1**
+  Una vez instaladas correctamente todas las librerias y dependencias especificadas en el archivo requirements.txt se puede proceder con la ejecucion de la aplicacion utilizando el siguiente comando 
+  `python app.py `
 
-<img width="159" height="23" alt="image" src="https://github.com/user-attachments/assets/a6c21d32-aac3-4870-bf43-b2227d955035" />
 
-* a- Acceder al script.ps1
-* b- Modificar la ruta del entorno virtual si es necesario
-  <img width="506" height="22" alt="image" src="https://github.com/user-attachments/assets/2546c7a6-5797-4a7d-b3ba-f9de6a69a2b4" />
-* c- Modificar la Política de Ejecución a RemoteSigned → permite ejecutar scripts locales sin firmar
-* c- Ejecutar el script install.ps1 en la terminal
-  ```terminal
-   .\install.ps1 
-   ...
+## 🚀 Pasos para la ejecución de la aplicación
 
+Para garantizar una correcta inicialización del proyecto, se recomienda seguir el siguiente procedimiento:
+
+1. **Crear el entorno virtual en la raíz del proyecto**  
+   ```bash
+   python -m venv venv
 
 
 
