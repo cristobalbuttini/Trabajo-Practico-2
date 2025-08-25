@@ -60,6 +60,7 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
 
 ## Pasos para la ejecución de la aplicacion
 Para garantizar una correcta inicialización del proyecto, se recomienda seguir el siguiente procedimiento.
+
 En una nueva terminal ejecutar los siguiente comandos:
 
 1. **Crear el entorno virtual en la carpeta raiz del proyecto**  
@@ -74,6 +75,7 @@ En una nueva terminal ejecutar los siguiente comandos:
   Una vez instaladas correctamente todas las librerias y dependencias especificadas en el archivo requirements.txt se puede proceder con la ejecucion de la aplicacion
   
 4. **Ejecucion de la Aplicacion**
+   
    ➜ `python app.py `
 
 
