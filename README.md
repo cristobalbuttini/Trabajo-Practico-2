@@ -59,21 +59,22 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
 
 
 ## Pasos para la ejecución de la aplicacion
+Para garantizar una correcta inicialización del proyecto, se recomienda seguir el siguiente procedimiento.
 En una nueva terminal ejecutar los siguiente comandos:
 
-1. **Crear el entorno virtual en la raiz del proyecto**  
+1. **Crear el entorno virtual en la carpeta raiz del proyecto**  
    ➜ `python -m venv venv`
 
 2. **Activar el entorno virtual (necesario para instalar las librerias de requirements.txt )**  
    ➜ `.\venv\Scripts\Activate.ps1`
 
-3. **Instalar las librerías y dependencias que estan en requirements.txt**  
+3. **Instalar las librerías y dependencias especificadas en requirements.txt**  
    ➜ `pip install -r requirements.txt`
 
   Una vez instaladas correctamente todas las librerias y dependencias especificadas en el archivo requirements.txt se puede proceder con la ejecucion de la aplicacion
   
 4. **Ejecucion de la Aplicacion**
-  ➜ `python app.py `
+   ➜ `python app.py `
 
 
 ## 🚀 Pasos para la ejecución de la aplicación
