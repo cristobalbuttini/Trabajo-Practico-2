@@ -70,7 +70,9 @@ En una nueva terminal ejecutar los siguiente comandos:
 3. **Instalar las librerías y dependencias que estan en requirements.txt**  
    ➜ `pip install -r requirements.txt`
 
-  Una vez instaladas correctamente todas las librerias y dependencias especificadas en el archivo requirements.txt se puede proceder con la ejecucion de la aplicacion utilizando el siguiente comando 
+  Una vez instaladas correctamente todas las librerias y dependencias especificadas en el archivo requirements.txt se puede proceder con la ejecucion de la aplicacion
+  
+4. Ejecucion de la aplicacion 
   `python app.py `
 
 
