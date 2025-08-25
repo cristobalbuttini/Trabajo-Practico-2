@@ -58,7 +58,7 @@ Cada entidad tiene un script dedicado dentro de `scripts/`, que:
 ---
 
 
-## **Pasos para la ejecución de la aplicacion **
+## Pasos para la ejecución de la aplicacion
 En una nueva terminal ejecutar los siguiente comandos:
 
 1. **Crear el entorno virtual en la raiz del proyecto**  
